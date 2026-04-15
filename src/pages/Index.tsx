@@ -408,11 +408,11 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <div className="rounded-xl overflow-hidden border border-border bg-card">
+            <div className="rounded-xl border border-border bg-card">
               <iframe
                 src="https://api.leadconnectorhq.com/widget/booking/0wq6f1mORfcJYQRsuY8w"
-                style={{ width: "100%", border: "none", overflow: "hidden", minHeight: "600px" }}
-                scrolling="no"
+                style={{ width: "100%", height: "900px", border: "none", display: "block" }}
+                
                 id="0wq6f1mORfcJYQRsuY8w_1776242553464"
                 title="Reservar llamada"
               />
