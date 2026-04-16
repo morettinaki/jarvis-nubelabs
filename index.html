@@ -38,6 +38,11 @@
     body{padding-top:44px!important}
     .fixed.top-0.left-0.right-0.z-50{top:44px!important}
     @media(max-width:640px){#jn-cta-text{display:none}}
+  
+    /* Fix overly tight letter-spacing on large headings */
+    h1.tracking-tight, h2.tracking-tight { letter-spacing: -0.015em !important; }
+    h2.font-extrabold { letter-spacing: -0.018em !important; }
+    h1, h2, h3 { word-spacing: 0.04em; }
   </style>
 </head>
   <body>
@@ -47,5 +52,19 @@
     <a id="jn-cta-btn" href="https://api.leadconnectorhq.com/widget/booking/0wq6f1mORfcJYQRsuY8w" target="_blank" rel="noopener noreferrer">📅 Agenda una reunión</a>
   </div>
     <div id="root"></div>
-  </body>
+  
+  <script>
+    (function(){
+      function fixBr(){
+        document.querySelectorAll('h1 br,h2 br,h3 br').forEach(function(br){
+          var p=br.previousSibling,n=br.nextSibling;
+          if(p&&p.nodeType===3&&!p.textContent.endsWith(' '))p.textContent+=' ';
+          if(n&&n.nodeType===3&&!n.textContent.startsWith(' '))n.textContent=' '+n.textContent;
+        });
+      }
+      [150,600,1800].forEach(function(t){setTimeout(fixBr,t);});
+      window.addEventListener('resize',fixBr);
+    })();
+  </script>
+</body>
 </html>
