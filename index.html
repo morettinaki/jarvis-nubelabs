@@ -19,8 +19,33 @@
   <meta name="twitter:description" content="Jarvis Connect: la plataforma que hace tus tareas mientras duermes.">
   <script type="module" crossorigin src="/assets/index-DwD_RlgS.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-C6sw3Hcf.css">
+
+  <style>
+    /* === BUTTON VISIBILITY FIX === */
+    button:not(.md\:hidden){display:inline-flex;align-items:center;justify-content:center;gap:.4rem;border-radius:.5rem;font-weight:600;cursor:pointer;transition:all .2s ease}
+    button:not([variant]):not(.md\:hidden){background:hsl(217,91%,55%);color:#fff;border:2px solid hsl(217,91%,55%);padding:.65rem 1.5rem;box-shadow:0 2px 10px hsl(217 91% 55% / .35)}
+    button:not([variant]):not(.md\:hidden):hover{background:hsl(217,91%,47%);border-color:hsl(217,91%,47%);box-shadow:0 4px 18px hsl(217 91% 55% / .5);transform:translateY(-1px)}
+    button[variant=outline]:not(.md\:hidden){background:transparent;color:hsl(217,91%,55%);border:2px solid hsl(217,91%,55%);padding:.65rem 1.5rem}
+    button[variant=outline]:not(.md\:hidden):hover{background:hsl(217 91% 55% / .08);transform:translateY(-1px)}
+    button.w-full:not(.md\:hidden){width:100%;padding:.75rem 1.5rem;justify-content:center}
+    button a{color:inherit;text-decoration:none}
+
+    /* === STICKY CTA BAR === */
+    #jn-cta{position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(90deg,#1a56db,#4f46e5);padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:16px;box-shadow:0 2px 16px rgba(0,0,0,.3);height:44px}
+    #jn-cta-text{color:rgba(255,255,255,.92);font-weight:500;font-size:14px;font-family:Manrope,sans-serif}
+    #jn-cta-btn{background:#fff;color:#1a56db;font-weight:700;font-size:13px;padding:6px 18px;border-radius:6px;text-decoration:none;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.2);transition:all .2s;flex-shrink:0;font-family:Manrope,sans-serif}
+    #jn-cta-btn:hover{background:#eff6ff;transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,.25)}
+    body{padding-top:44px!important}
+    .fixed.top-0.left-0.right-0.z-50{top:44px!important}
+    @media(max-width:640px){#jn-cta-text{display:none}}
+  </style>
 </head>
   <body>
+    
+  <div id="jn-cta">
+    <span id="jn-cta-text">¿Tu negocio podría estar trabajando para ti ahora mismo?</span>
+    <a id="jn-cta-btn" href="https://api.leadconnectorhq.com/widget/booking/0wq6f1mORfcJYQRsuY8w" target="_blank" rel="noopener noreferrer">📅 Agenda una reunión</a>
+  </div>
     <div id="root"></div>
   </body>
 </html>
