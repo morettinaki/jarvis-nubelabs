@@ -61,11 +61,54 @@ const testimonials = [
   },
 ];
 
-const BOOKING_URL = "https://api.leadconnectorhq.com/widget/booking/0wq6f1mORfcJYQRsuY8w";
+const CAL_LINK = "nubelabs-hey/30min";
+const CAL_CONFIG = { layout: "month_view", useSlotsViewOnSmallScreen: "true" };
+const preventCalNav = (e: React.MouseEvent) => e.preventDefault();
 
 const Index = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    (function (C: any, A: string, L: string) {
+      let p = function (a: any, ar: any) { a.q.push(ar); };
+      let d = C.document;
+      C.Cal = C.Cal || function () {
+        let cal = C.Cal; let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {}; cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
+    // @ts-ignore
+    Cal("init", "30min", { origin: "https://app.cal.com" });
+    // @ts-ignore
+    Cal.config = Cal.config || {};
+    // @ts-ignore
+    Cal.config.forwardQueryParams = true;
+    // @ts-ignore
+    Cal.ns["30min"]("inline", {
+      elementOrSelector: "#my-cal-inline-30min",
+      config: CAL_CONFIG,
+      calLink: CAL_LINK,
+    });
+    // @ts-ignore
+    Cal.ns["30min"]("ui", { hideEventTypeDetails: false, layout: "month_view" });
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -92,7 +135,7 @@ const Index = () => {
             {navLinks.map((l) => (
               <a key={l.href} href={l.href} className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{l.label}</a>
             ))}
-            <Button size="sm" asChild><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Reservar llamada</a></Button>
+            <Button size="sm" asChild><a href="#contact" data-cal-link={CAL_LINK} data-cal-namespace="30min" data-cal-config={JSON.stringify(CAL_CONFIG)} onClick={preventCalNav}>Reservar llamada</a></Button>
           </div>
           <button className="md:hidden text-foreground" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -103,7 +146,7 @@ const Index = () => {
             {navLinks.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="block py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">{l.label}</a>
             ))}
-            <Button size="sm" className="w-full mt-2" asChild><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Reservar llamada</a></Button>
+            <Button size="sm" className="w-full mt-2" asChild><a href="#contact" data-cal-link={CAL_LINK} data-cal-namespace="30min" data-cal-config={JSON.stringify(CAL_CONFIG)} onClick={(e) => { preventCalNav(e); setMenuOpen(false); }}>Reservar llamada</a></Button>
           </div>
         )}
       </nav>
@@ -166,7 +209,7 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button size="lg" className="text-base px-8" asChild>
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer"><Calendar size={18} className="mr-2" /> Reservar llamada gratuita</a>
+              <a href="#contact" data-cal-link={CAL_LINK} data-cal-namespace="30min" data-cal-config={JSON.stringify(CAL_CONFIG)} onClick={preventCalNav}><Calendar size={18} className="mr-2" /> Reservar llamada gratuita</a>
             </Button>
             <Button size="lg" variant="outline" className="text-base px-8" asChild>
               <a href="#capabilities">Ver si Jarvis es para mí →</a>
@@ -340,7 +383,7 @@ const Index = () => {
               </CardContent>
               <div className="p-6 pt-0">
                 <Button className="w-full" variant="outline" asChild>
-                  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Reservar llamada gratuita</a>
+                  <a href="#contact" data-cal-link={CAL_LINK} data-cal-namespace="30min" data-cal-config={JSON.stringify(CAL_CONFIG)} onClick={preventCalNav}>Reservar llamada gratuita</a>
                 </Button>
               </div>
             </Card>
@@ -378,7 +421,7 @@ const Index = () => {
               </CardContent>
               <div className="p-6 pt-0">
                 <Button className="w-full" asChild>
-                  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Reservar llamada gratuita</a>
+                  <a href="#contact" data-cal-link={CAL_LINK} data-cal-namespace="30min" data-cal-config={JSON.stringify(CAL_CONFIG)} onClick={preventCalNav}>Reservar llamada gratuita</a>
                 </Button>
                 <p className="text-xs text-muted-foreground/60 text-center mt-3">La opción que elige la mayoría de nuestros clientes.</p>
               </div>
@@ -409,13 +452,7 @@ const Index = () => {
               </div>
             </div>
             <div className="rounded-xl border border-border bg-card">
-              <iframe
-                src="https://api.leadconnectorhq.com/widget/booking/0wq6f1mORfcJYQRsuY8w"
-                style={{ width: "100%", height: "900px", border: "none", display: "block" }}
-                
-                id="0wq6f1mORfcJYQRsuY8w_1776242553464"
-                title="Reservar llamada"
-              />
+              <div id="my-cal-inline-30min" style={{ width: "100%", minHeight: "900px", overflow: "auto" }} />
             </div>
           </div>
         </div>
